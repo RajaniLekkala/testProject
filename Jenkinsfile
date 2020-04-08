@@ -27,7 +27,7 @@ pipeline {
     	    bat 'dotnet pack --no-build --output nupkgs'
    	}
       }
-       stage('Robot Framework System tests with Selenium') {
+      stage('Robot Framework System tests with Selenium') {
                     steps {
                         sh 'robot -d results --variable BROWSER:headlesschrome movies.robot'
                     }
@@ -54,5 +54,12 @@ pipeline {
      
        
      }
+      post {
+        always {
+            junit '**/TEST*.xml'
+            emailext attachLog: true, attachmentsPattern: '**/TEST*xml', body: '', recipientProviders: [culprits()], 	subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+
+        }
+    }
     
  }
