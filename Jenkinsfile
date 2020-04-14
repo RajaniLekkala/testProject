@@ -35,7 +35,7 @@ pipeline {
         stage('UI tests') {
             steps {
                    
-                    bat 'robot C:/Users/rajani/PycharmProjects/Movies/Tests'
+                    bat 'robot movies.robot'
             }
         }
      }
